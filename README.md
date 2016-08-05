@@ -2,8 +2,8 @@
 python3 espeak indicator example
 
 
-#Path for Unity laucher
-~/.config/autostart
+##Path for Unity Laucher
+`/usr/share/applications/`
 
-#Path for Autostart
-/usr/share/applications/
+##Path for Autostart
+`~/.config/autostart`

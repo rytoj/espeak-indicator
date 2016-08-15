@@ -8,7 +8,7 @@ from gi.repository import AppIndicator3
 import subprocess
 import os
 import signal
-
+import re
 
 def espeak_pause(w, arg):
     try:
@@ -29,8 +29,11 @@ def espeak_continue(w, arg):
 def espeak_kill(w, arg):
     try:
         pid = subprocess.check_output(["pidof","espeak"])
-        pid = int(pid)
-        os.kill(pid, signal.SIGKILL)
+        pids = re.findall('\d+', str(pid)) # finds all numbers
+        for pid in pids:
+            pid = int(pid)
+            print(pid)
+            os.kill(pid, signal.SIGKILL)
     except subprocess.CalledProcessError:
         print("No process found")
 
@@ -52,7 +55,7 @@ mitem.show()
 mitem.connect("activate", espeak_continue, None)
 
 # Menu 2
-mitem = Gtk.MenuItem("Stop espeak")
+mitem = Gtk.MenuItem("Pause espeak")
 menu.append(mitem)
 mitem.show()
 mitem.connect("activate", espeak_pause, None)
